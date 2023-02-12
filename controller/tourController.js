@@ -7,7 +7,12 @@ exports.getAllTours = async (req, res) => {
     const excludedFields = ['page', 'limit', 'sort', 'fields'];
     excludedFields.forEach((el) => delete queryObj[el]);
 
-    const query = Tour.find(queryObj);
+    const queryStr = JSON.stringify(queryObj).replace(
+      /\b(gte|gt|lte|lt)\b/g,
+      (match) => `$${match}`
+    );
+
+    const query = Tour.find(JSON.parse(queryStr));
 
     /* const query = Tour.find()
       .where('duration')
