@@ -25,6 +25,16 @@ exports.getAllTours = async (req, res) => {
     }
     /* SORTING END */
 
+    /* LMITING FIELDS START */
+    console.warn();
+    if (req.query.fields) {
+      const fields = req.query.fields.split(',').join(' ');
+      query = query.select(fields);
+    } else {
+      query = query.select('-__v');
+    }
+    /* LMITING FIELDS END */
+
     // EXECUTE
     const tours = await query;
     // RESPONSE
