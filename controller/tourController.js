@@ -26,7 +26,6 @@ exports.getAllTours = async (req, res) => {
     /* SORTING END */
 
     /* LMITING FIELDS START */
-    console.warn();
     if (req.query.fields) {
       const fields = req.query.fields.split(',').join(' ');
       query = query.select(fields);
@@ -34,6 +33,19 @@ exports.getAllTours = async (req, res) => {
       query = query.select('-__v');
     }
     /* LMITING FIELDS END */
+
+    /* PAGINATION START */
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit * 1 || 100;
+    const skip = (page - 1) * limit;
+
+    query = query.skip(skip).limit(limit);
+
+    if (req.query.page) {
+      const numTours = await Tour.countDocuments();
+      if (skip >= numTours) throw new Error('This page does not exist');
+    }
+    /* PAGINATION END */
 
     // EXECUTE
     const tours = await query;
