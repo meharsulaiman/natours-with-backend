@@ -2,6 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 const rateLimmit = require('express-rate-limit');
 const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
 
 const app = express();
 
@@ -29,6 +31,12 @@ if (process.env.NODE_ENV === 'development') {
 
 // * Body Parser, reading data from request's body
 app.use(express.json({ limit: '10kb' }));
+
+// ? Data sanitization against NOSQL query injection
+app.use(mongoSanitize());
+
+// ? Data sanitization against XSS (cross side scripting)
+app.use(xss());
 
 // * Serving static file {Public folder}
 app.use(express.static('public'));
