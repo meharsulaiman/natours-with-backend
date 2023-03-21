@@ -46,15 +46,6 @@ const toursSchema = new mongoose.Schema(
         message: 'Discounted price ({VALUE}) should be below the reqular price',
       },
     },
-    /* priceDiscount: {
-      type: Number,
-      validate: [
-        function (val) {
-          return val < this.price; // 200 < 250
-        },
-        'Discounted price ({VALUE}) should be below the reqular price',
-      ],
-    }, */
 
     ratingsAverage: {
       type: Number,
@@ -94,6 +85,29 @@ const toursSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    startLocation: {
+      type: {
+        type: String,
+        default: 'Point',
+        enum: ['Point'],
+      },
+      coordinates: [Number],
+      address: String,
+      discription: String,
+    },
+    locations: [
+      {
+        type: {
+          type: String,
+          default: 'Point',
+          enum: ['Point'],
+        },
+        coordinates: [Number],
+        address: String,
+        discription: String,
+        day: Number,
+      },
+    ],
   },
   {
     toJSON: { virtuals: true },
