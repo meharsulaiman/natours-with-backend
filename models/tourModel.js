@@ -149,10 +149,10 @@ toursSchema.pre(/^find/, function (next) {
   next();
 });
 
-toursSchema.pre('aggregate', function (next) {
+/* toursSchema.pre('aggregate', function (next) {
   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
   next();
-});
+}); */
 
 toursSchema.pre(/^find/, function (next) {
   this.populate({
