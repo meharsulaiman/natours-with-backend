@@ -5,8 +5,15 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const path = require('path');
 
 const app = express();
+
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
+// * Serving static file {Public folder}
+app.use(express.static(path.join(__dirname, 'public')));
 
 const globalErrorHandler = require('./controller/errorController');
 const AppError = require('./utils/appError');
@@ -54,8 +61,9 @@ app.use(
   })
 );
 
-// * Serving static file {Public folder}
-app.use(express.static('public'));
+app.get('/', (req, res) => {
+  res.status(200).render('base');
+});
 
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
