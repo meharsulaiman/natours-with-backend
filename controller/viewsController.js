@@ -16,7 +16,7 @@ exports.getTour = catchAsync(async (req, res) => {
   });
 
   res.status(200).render('tour', {
-    title: 'The forest Hiker',
+    title: `${tour.name} Tour`,
     tour,
   });
 });
