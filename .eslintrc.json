@@ -16,6 +16,10 @@
     "prefer-destructuring": ["error", { "object": true, "array": false }],
     "prefer-arrow-callback": "off",
     "import/no-extraneous-dependencies": "off",
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module"
+    },
     "no-unused-vars": [
       "error",
       { "argsIgnorePattern": "req|res|next|val|error" }
